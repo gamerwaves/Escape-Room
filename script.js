@@ -2,7 +2,6 @@ let finish1 = false;
 let finish2 = false;
 let finish3 = false;
 let finish4 = false;
-let finish5 = false;
 
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".shape-option").forEach(option => {
@@ -87,9 +86,11 @@ function checkAnswer1() {
   if (selectedShapes.join(",") === correctSequence.join(",")) {
       alert("Correct! Move to the next lock.");
       finish1 = true;
-      goBack();
+      loadLock("lock2");
+      checkConditions();
   } else {
       alert("Wrong answer. Try again!");
+      clearAll();
   }
 }
 
@@ -104,7 +105,8 @@ function checkAnswer2() {
   if (selectedColors.length === correctAnswer.length && selectedColors.every((color, index) => color.toLowerCase() === correctAnswer[index])) {
     alert("Correct! Move to the next lock.");
     finish2 = true;
-    goBack();
+    loadLock("lock3");
+    checkConditions();
   } else {
     alert("Wrong answer. Try again!");
     clearAll()
@@ -117,9 +119,11 @@ function checkAnswer3() {
   if (answer === "coldcase") {
     alert("Correct! Move to the next lock.");
     finish3 = true;
-    goBack();
+    loadLock("lock4");
+    checkConditions();
   } else {
     alert("Wrong answer. Try again!");
+    clearAll();
   }
 }
 
@@ -128,15 +132,17 @@ function checkAnswer4() {
   if (answer === "9658") {
     alert("Correct! Move to the next lock.");
     finish4 = true;
-    goBack();
+    checkConditions();
   } else {
     alert("Wrong answer. Try again!");
+    clearAll();
   }
 }
 
 const checkConditions = () => {
-  if (finish1 && finish2 && finish3 && finish4) {
-    document.getElementById("container").innerHTML = `
+  let container = document.getElementById("container");
+  if (finish1 === true && finish2 === true && finish3 === true && finish4 === true) {
+    container.innerHTML = `
       <h1>Congratulations!</h1>
       <p>You BROKE OUT!</p>
     `;
