@@ -24,10 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
           box.removeAttribute("data-filled");
       });
   });
-});
 
-
-document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll('.color-option').forEach(option => {
       option.addEventListener('click', function () {
           let color = this.getAttribute('data-color');
@@ -51,11 +48,9 @@ function hideLocks() {
 }
 
 function loadLock(lock) {
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('lock' + i).style.display = 'none';
-    document.getElementById('lock' + i).style.visibility = 'hidden';
-  }
+  hideLocks();
   document.getElementById('container').style.display = 'none';
+  document.getElementById('container').style.visibility = 'hidden';
   document.getElementById(lock).style.display = 'block';
   document.getElementById(lock).style.visibility = 'visible';
 }
@@ -69,14 +64,14 @@ function clearAll() {
   document.querySelectorAll('.circle').forEach(circle => {
     circle.style.backgroundColor = 'transparent';
     circle.removeAttribute('data-filled');
-    document.querySelectorAll('.shape-box').forEach(shape => {
-      shape.textContent = '';
-      shape.removeAttribute('data-shape');
-    });
+  });
+  document.querySelectorAll('.shape-box').forEach(shape => {
+    shape.textContent = '';
+    shape.removeAttribute('data-shape');
+    shape.removeAttribute('data-filled');
   });
 }
-// Answers
-// Answer 1
+
 function checkAnswer1() {
   const selectedShapes = Array.from(document.querySelectorAll(".shape-box"))
       .map(box => box.getAttribute("data-shape") || "");
@@ -94,12 +89,10 @@ function checkAnswer1() {
   }
 }
 
-// Answer 2
 function checkAnswer2() {
   const circles = document.querySelectorAll('.circle[data-filled]');
   const selectedColors = Array.from(circles).map(circle => circle.style.backgroundColor);
 
-  // Define the correct color order for the answer
   const correctAnswer = ['orange', 'white', 'brown', 'purple', 'blue']; 
 
   if (selectedColors.length === correctAnswer.length && selectedColors.every((color, index) => color.toLowerCase() === correctAnswer[index])) {
@@ -112,7 +105,6 @@ function checkAnswer2() {
     clearAll()
   }
 }
-
 
 function checkAnswer3() {
   const answer = document.getElementById("answer3").value.trim().toLowerCase();
@@ -139,15 +131,14 @@ function checkAnswer4() {
   }
 }
 
-const checkConditions = () => {
-  let container = document.getElementById("container");
-  if (finish1 === true && finish2 === true && finish3 === true && finish4 === true) {
-    container.innerHTML = `
+function checkConditions() {
+  if (finish1 && finish2 && finish3 && finish4) {
+    hideLocks();
+    document.getElementById('container').style.display = 'block';
+    document.getElementById('container').style.visibility = 'visible';
+    document.getElementById("container").innerHTML = `
       <h1>Congratulations!</h1>
       <p>You BROKE OUT!</p>
     `;
-    clearInterval(interval);
   }
-};
-
-const interval = setInterval(checkConditions, 1);
+}
