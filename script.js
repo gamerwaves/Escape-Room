@@ -137,8 +137,7 @@ function checkConditions() {
     document.getElementById('container').style.display = 'block';
     document.getElementById('container').style.visibility = 'visible';
     document.getElementById("container").innerHTML = `
-      <h1>Congratulations!</h1>
-      <p>You BROKE OUT!</p>
+    <img src="https://content.breakoutedu.com/uploads/mini_games/endscreens/7291560221707.jpg" alt="Congratulations on escaping the Cold Case!" />
     `;
   }
 }
